@@ -1,0 +1,24 @@
+{
+  "name": "natoursapi",
+  "version": "1.0.0",
+  "description": "A demo project for getting hand dirty with Express, MongoDB and Mongoose",
+  "homepage": "https://github.com/sldimitrov/NatoursAPI#readme",
+  "bugs": {
+    "url": "https://github.com/sldimitrov/NatoursAPI/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sldimitrov/NatoursAPI.git"
+  },
+  "license": "MIT",
+  "author": "Slavi Dimitrov",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "nodemon": "^3.1.10"
+  }
+}

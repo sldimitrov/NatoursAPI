@@ -1,13 +1,16 @@
 const express = require('express');
 const fs = require('fs');
 
-const PORT = 3001;
+const PORT = 3000;
 const app = express();
+
+// Middleware
 app.use(express.json());
 
-
+// Read data
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`))
 
+// Tour Controllers
 const getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -57,8 +60,6 @@ const createTour = (req, res) => {
       }
     })
   })
-
-  console.log(req.body);
   res.send('Done');
 }
 
@@ -109,17 +110,51 @@ const deleteTour = (req, res) => {
   })
 }
 
-// Old Syntax
-// app.get('/api/v1/tours', getAllTours);
-// app.post('/api/v1/tours', createTour);
-// app.get('/api/v1/tours/:id', getSingleTour)
-// app.patch('/api/v1/tours/:id', updateTour)
-// app.delete('/api/v1/tours/:id', deleteTour)
+// User Controllers
+const getAllUsers = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!'
+  })
+}
 
-// Using Router
+const createUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!'
+  })
+}
+
+const getSingleUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!'
+  })
+}
+
+const updateUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!'
+  })
+}
+
+const deleteUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined!'
+  })
+}
+
+// Tour Routes
 app.route('/api/v1/tours').get(getAllTours).post(createTour);
 app.route('/api/v1/tours/:id').get(getSingleTour).patch(updateTour).delete(deleteTour);
 
+// User Routes
+app.route('/api/v1/users').get(getAllUsers).post(createUser);
+app.route('/api/v1/users/:id').get(getSingleUser).patch(updateUser).delete(deleteUser);
+
+// Start Server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 })

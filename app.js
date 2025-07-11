@@ -146,13 +146,21 @@ const deleteUser = (req, res) => {
   })
 }
 
+// Mounted Routers
+const tourRouter = express.Router();
+const userRouter = express.Router();
+
 // Tour Routes
-app.route('/api/v1/tours').get(getAllTours).post(createTour);
-app.route('/api/v1/tours/:id').get(getSingleTour).patch(updateTour).delete(deleteTour);
+tourRouter.route('/').get(getAllTours).post(createTour);
+tourRouter.route('/:id').get(getSingleTour).patch(updateTour).delete(deleteTour);
 
 // User Routes
-app.route('/api/v1/users').get(getAllUsers).post(createUser);
-app.route('/api/v1/users/:id').get(getSingleUser).patch(updateUser).delete(deleteUser);
+userRouter.route('/').get(getAllUsers).post(createUser);
+userRouter.route('/:id').get(getSingleUser).patch(updateUser).delete(deleteUser);
+
+// Middleware for mounted routers
+app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
 
 // Start Server
 app.listen(PORT, () => {

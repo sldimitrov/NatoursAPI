@@ -3,6 +3,17 @@ const fs = require('fs');
 // Read data
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`))
 
+// Middleware to check ID
+exports.checkID = (req, res, next, val) => {
+  if (val * 1 > tours.length) {
+    return res.status(404).json({
+      status: 'failure',
+      message: 'Invalid ID'
+    })
+  }
+  next();
+}
+
 // Tour Controllers
 exports.getAllTours = (req, res) => {
   res.status(200).json({
@@ -15,14 +26,6 @@ exports.getAllTours = (req, res) => {
 
 exports.getSingleTour = (req, res) => {
   const tourId = req.params.id * 1;
-
-  if (tourId > tours.length) {
-    res.status(404).json({
-      status: 'failure',
-      message: 'Tour not found'
-    })
-  }
-
   const tour = tours.find(el => el.id === tourId);
 
   res.status(200).json({
@@ -59,15 +62,9 @@ exports.createTour = (req, res) => {
 exports.updateTour = (req, res) => {
   const tourId = req.params.id * 1;
   const tourIndex = tours.findIndex(el => el.id === tourId);
-
-  if (tourIndex === -1) {
-    return res.status(404).json({
-      status: 'failure',
-      message: 'Tour not found'
-    })
-  }
-
   const updatedTour = Object.assign(tours[tourIndex], req.body);
+
+  // Update the tour in the array
   tours[tourIndex] = updatedTour;
 
   fs.writeFile(`${__dirname}/../dev-data/data/tours-simple.json`, JSON.stringify(tours), err => {
@@ -88,15 +85,6 @@ exports.updateTour = (req, res) => {
 }
 
 exports.deleteTour = (req, res) => {
-  const tourId = req.params.id * 1;
-  const tourIndex = tours.findIndex(el => el.id === tourId);
-
-  if (tourIndex === -1) {
-    res.status(404).json({
-      message: ''
-    })
-  }
-
   res.status(204).json({
     status: 'success',
     data: null
